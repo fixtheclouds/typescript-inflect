@@ -1,0 +1,29 @@
+{
+  "name": "typescript-inflect",
+  "version": "1.0.0",
+  "description": "Simple JS inflection library written with TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc index.ts --module commonjs ",
+    "pretest": "tsc test/*Test.ts --module commonjs",
+    "test": "mocha --reporter list"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unsaidxpl/typescript-inflect.git"
+  },
+  "author": "Egor Romanov <unsaidxpl@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/unsaidxpl/typescript-inflect/issues"
+  },
+  "homepage": "https://github.com/unsaidxpl/typescript-inflect#readme",
+  "dependencies": {
+    "typescript": "^2.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.22",
+    "assert": "^1.4.1",
+    "mocha": "^3.4.2"
+  }
+}
