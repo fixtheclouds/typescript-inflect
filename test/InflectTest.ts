@@ -1,6 +1,6 @@
 /**
  * Mocha test suite for index.ts
- * TODO rewrite using dynamically generated tests
+ * TODO rewrite using dynamically generated
  */
 /// <reference path="../typings/index.d.ts" />
 /// <reference> node.d.ts
@@ -8,11 +8,7 @@ import Inflect from '../index';
 import assert = require('assert');
 
 describe('Inflect', () => {
-  let subject: Inflect;
-
-  beforeEach(() => {
-    subject = new Inflect();
-  });
+  let subject = Inflect;
 
   describe('#demodulize', () => {
     it('return last part of module string', () => {
