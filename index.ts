@@ -16,4 +16,23 @@ export default class Inflect {
   dasherize(string: string): string {
     return string.replace(/_/g, '-');
   }
+
+  ordinal(number: number): string {
+    const absNumber: number = Math.floor(Math.abs(number));
+
+    if ([11, 12, 13].indexOf(absNumber % 100) !== -1) {
+      return 'th';
+    } else {
+      switch(absNumber % 10) {
+        case 1: return 'st';
+        case 2: return 'nd';
+        case 3: return 'rd';
+        default: return 'th';
+      }
+    }
+  }
+
+  ordinalize(number: number): string {
+    return `${number}${this.ordinal(number)}`;
+  }
 }
