@@ -44,4 +44,14 @@ export default class Inflect {
   static ordinalize(number: number): string {
     return `${number}${this.ordinal(number)}`;
   }
+
+  // makes an underscored, lowercase form from the expression in the string
+  static underscore(string: string): string {
+    if (!/[A-Z-]|::/g.test(string)) { return string; }
+    let result = string.replace(/::/g, '/');
+    result = result.replace(/([A-Z\d]+)([A-Z][a-z])/g, '$1_$2');
+    result = result.replace(/([a-z\d])([A-Z])/g, '$1_$2');
+    result = result.replace(/-/g, '_');
+    return result.toLowerCase();
+  }
 }

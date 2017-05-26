@@ -67,4 +67,16 @@ describe('Inflect', () => {
       assert.equal('555th', subject.ordinalize(555));
     });
   });
+
+  describe('#underscore', () => {
+    it('returns underscored string', () => {
+      assert.equal('01_un_der_score', subject.underscore('01UnDerScore'));
+    });
+    it('returns underscored string', () => {
+      assert.equal('dashed_string', subject.underscore('dashed-string'));
+    });
+    it('doesn`t change already underscore-compatible string', () => {
+      assert.equal('test_string', subject.underscore('test_string'));
+    });
+  });
 });
