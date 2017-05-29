@@ -2,6 +2,8 @@
  * Main inflector class
  * TODO describe interface first
  */
+import * as dictionary from './dictionary.json';
+
 export default class Inflect {
   // returns the last part of a namespace, e.g. 'Foo::Bar::Baz' => 'Baz'
   static demodulize(string: string): string {
