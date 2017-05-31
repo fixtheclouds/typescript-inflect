@@ -79,4 +79,40 @@ describe('Inflect', () => {
       assert.equal('test_string', subject.underscore('test_string'));
     });
   });
+
+  describe('#pluralize', () => {
+    it('pluralizes regular word', () => {
+      assert.equal('words', subject.pluralize('word'));
+    });
+    it('doesn`t pluralize uncountable word', () => {
+      assert.equal('deer', subject.pluralize('deer'));
+    });
+    it('doesn`t pluralize already plural', () => {
+      assert.equal('matches', subject.pluralize('matches'));
+    });
+    it('pluralizes irregular word', () => {
+      assert.equal('feet', subject.pluralize('foot'));
+    });
+    it('preserves word case', () => {
+      assert.equal('Moles', subject.pluralize('Mole'));
+    });
+    it('respects uppercase', () => {
+      assert.equal('ECHOES', subject.pluralize('ECHO'));
+    });
+  });
+
+  describe('#singularize', () => {
+    it('singularizes regular plural word', () => {
+      assert.equal('shoe', subject.singularize('shoes'));
+    });
+    it('doesn`t singularize non-plural word', () => {
+      assert.equal('dog', subject.singularize('dog'));
+    });
+    it('singularizes irregular word', () => {
+      assert.equal('ox', subject.singularize('oxen'));
+    });
+    it('preserves uppercase', () => {
+      assert.equal('FRIEND', subject.singularize('FRIENDS'));
+    });
+  });
 });
