@@ -1,6 +1,5 @@
 /**
  * Mocha test suite for index.ts
- * TODO rewrite using dynamically generated
  */
 /// <reference path="../typings/index.d.ts" />
 /// <reference> node.d.ts
@@ -11,20 +10,30 @@ describe('Inflect', () => {
   let subject = Inflect;
 
   describe('#demodulize', () => {
-    it('return last part of module string', () => {
-      assert.equal('Module', subject.demodulize('Test::String::Module'));
-    });
-    it('returns the whole string if it`s not module string', () => {
-      assert.equal('Something', subject.demodulize('Something'));
+    const tests = [
+      { arg: 'Test::String::Module', expected: 'Module' },
+      { arg: 'Something', expected: 'Something' },
+      { arg: '::Word', expected: 'Word' }
+    ];
+
+    tests.forEach((test) => {
+      it(`demodulizes '${test.arg}'`, () => {
+        assert.equal(test.expected, subject.demodulize.call(subject, test.arg));
+      });
     });
   });
 
   describe('#camelize', () => {
-    it('camelizes string', () => {
-      assert.equal('TestString', subject.camelize('test_string'));
-    });
-    it('camelizes string with lower case first letter is told so', () => {
-      assert.equal('testString', subject.camelize('Test_string', true));
+    const tests = [
+      { args: ['product.name', false], expected: 'ProductName' },
+      { args: ['test_string', false], expected: 'TestString' },
+      { args: ['Test_string', true], expected: 'testString' }
+    ];
+
+    tests.forEach((test) => {
+      it(`camelizes '${test.args[0]}' with lowercase first letter = '${test.args[1]}'`, () => {
+        assert.equal(test.expected, subject.camelize.apply(subject, test.args));
+      });
     });
   });
 
@@ -35,84 +44,81 @@ describe('Inflect', () => {
   });
 
   describe('#ordinal', () => {
-    beforeEach(() => {
-      this.number = Math.floor(Math.random());
-    });
+    const number = Math.floor(Math.random() * 100) * 100;
+    const tests = [
+      { arg: number + 1, expected: 'st' },
+      { arg: number + 2, expected: 'nd' },
+      { arg: number + 3, expected: 'rd' },
+      { arg: number + 13, expected: 'th' }
+    ]
 
-    it('returns `st` number suffix', () => {
-      assert.equal('st', subject.ordinal(this.number * 10 + 1));
-    });
-    it('returns `nd` number suffix', () => {
-      assert.equal('nd', subject.ordinal(this.number * 10 + 2));
-    });
-    it('return `rd` number suffix', () => {
-      assert.equal('rd', subject.ordinal(this.number * 10 + 3));
-    });
-    it('return `th` number suffix', () => {
-      assert.equal('th', subject.ordinal(this.number * 100 + 13));
+    tests.forEach((test) => {
+      it(`returns ${test.arg} number suffix`, () => {
+        assert.equal(test.expected, subject.ordinal.call(subject, test.arg));
+      });
     });
   });
 
   describe('#ordinalize', () => {
-    it('returns number with `st` suffix', () => {
-      assert.equal(`321st`, subject.ordinalize(321));
-    });
-    it('returns number with `nd` suffix', () => {
-      assert.equal('7002nd', subject.ordinalize(7002));
-    });
-    it('returns number with `rd` suffix', () => {
-      assert.equal('33rd', subject.ordinalize(33));
-    });
-    it('returns number with `th` suffix', () => {
-      assert.equal('555th', subject.ordinalize(555));
+    const tests = [
+      { arg: 321, expected: '321st' },
+      { arg: 7002, expected: '7002nd' },
+      { arg: 33, expected: '33rd' },
+      { arg: 555, expected: '555th' }
+    ]
+
+    tests.forEach((test) => {
+      it(`return ${test.arg} number with '${test.expected}'' suffix`, () => {
+        assert.equal(test.expected, subject.ordinalize.call(subject, test.arg));
+      });
     });
   });
 
   describe('#underscore', () => {
-    it('returns underscored string', () => {
-      assert.equal('01_un_der_score', subject.underscore('01UnDerScore'));
-    });
-    it('returns underscored string', () => {
-      assert.equal('dashed_string', subject.underscore('dashed-string'));
-    });
-    it('doesn`t change already underscore-compatible string', () => {
-      assert.equal('test_string', subject.underscore('test_string'));
+    const tests = [
+      { arg: '01UnDerScore', expected: '01_un_der_score' },
+      { arg: 'dashed-string', expected: 'dashed_string' },
+      { arg: 'test_string', expected: 'test_string' }
+    ]
+
+    tests.forEach((test) => {
+      it(`return underscored '${test.arg}' string`, () => {
+        assert.equal(test.expected, subject.underscore.call(subject, test.arg));
+      });
     });
   });
 
   describe('#pluralize', () => {
-    it('pluralizes regular word', () => {
-      assert.equal('words', subject.pluralize('word'));
-    });
-    it('doesn`t pluralize uncountable word', () => {
-      assert.equal('deer', subject.pluralize('deer'));
-    });
-    it('doesn`t pluralize already plural', () => {
-      assert.equal('matches', subject.pluralize('matches'));
-    });
-    it('pluralizes irregular word', () => {
-      assert.equal('feet', subject.pluralize('foot'));
-    });
-    it('preserves word case', () => {
-      assert.equal('Moles', subject.pluralize('Mole'));
-    });
-    it('respects uppercase', () => {
-      assert.equal('ECHOES', subject.pluralize('ECHO'));
+    const tests = [
+      { arg: 'word', expected: 'words' },
+      { arg: 'deer', expected: 'deer' },
+      { arg: 'matches', expected: 'matches' },
+      { arg: 'foot', expected: 'feet' },
+      { arg: 'Mole', expected: 'Moles' },
+      { arg: 'ECHO', expected: 'ECHOES' },
+      { arg: 'this', expected: 'these' }
+    ]
+
+    tests.forEach((test) => {
+      it(`pluralizes word '${test.arg}'`, () => {
+        assert.equal(test.expected, subject.pluralize.call(subject, test.arg));
+      });
     });
   });
 
   describe('#singularize', () => {
-    it('singularizes regular plural word', () => {
-      assert.equal('shoe', subject.singularize('shoes'));
-    });
-    it('doesn`t singularize non-plural word', () => {
-      assert.equal('dog', subject.singularize('dog'));
-    });
-    it('singularizes irregular word', () => {
-      assert.equal('ox', subject.singularize('oxen'));
-    });
-    it('preserves uppercase', () => {
-      assert.equal('FRIEND', subject.singularize('FRIENDS'));
+    const tests = [
+      { arg: 'shoes', expected: 'shoe' },
+      { arg: 'dog', expected: 'dog' },
+      { arg: 'oxen', expected: 'ox' },
+      { arg: 'sheep', expected: 'sheep' },
+      { arg: 'FRIENDS', expected: 'FRIEND' }
+    ]
+
+    tests.forEach((test) => {
+      it(`singularizes word '${test.arg}'`, () => {
+        assert.equal(test.expected, subject.singularize.call(subject, test.arg));
+      });
     });
   });
 

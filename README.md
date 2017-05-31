@@ -14,3 +14,7 @@ To compile typescript:
 To run tests:
 
 ```npm test```
+
+## TODO
+
+* Use webpack to build client-side library
