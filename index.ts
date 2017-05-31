@@ -95,6 +95,7 @@ export default class Inflect {
         return this.convertCase(key, string);
       }
     }
+
     dictionary.singularRegex.some((rule: [RegExp, string]) => {
       if ((rule[0]).test(word)) {
         word = word.replace(rule[0], rule[1]);
@@ -102,6 +103,11 @@ export default class Inflect {
       }
     });
     return this.convertCase(word, string);
+  }
+
+  // creates class name from a plural table name
+  static classify(string: string): string {
+    return this.camelize(this.singularize(string.replace(/.*\./, '')));
   }
 
   // preserves original case given in pattern

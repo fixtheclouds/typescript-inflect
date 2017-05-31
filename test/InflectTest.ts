@@ -115,4 +115,13 @@ describe('Inflect', () => {
       assert.equal('FRIEND', subject.singularize('FRIENDS'));
     });
   });
+
+  describe('#classify', () => {
+    it('classifies string with dots', () => {
+      assert.equal('Property', subject.classify('product.properties'));
+    });
+    it('classifies string with underscores', () => {
+      assert.equal('WordProblem', subject.classify('word_problems'));
+    });
+  });
 });

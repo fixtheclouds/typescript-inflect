@@ -234,7 +234,6 @@ export default {
     [/m[ae]n$/i, 'men']
   ],
   singularRegex: [
-    [/s$/i, ''],
     [/(ss)$/i, '$1'],
     [/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)(?:sis|ses)$/i, '$1sis'],
     [/(^analy)(?:sis|ses)$/i, '$1sis'],
@@ -257,7 +256,8 @@ export default {
     [/(pe)(rson|ople)$/i, '$1rson'],
     [/(child)ren$/i, '$1'],
     [/(eau)x?$/i, '$1'],
-    [/men$/i, 'man']
+    [/men$/i, 'man'],
+    [/s$/i, '']
   ],
   uncountables: [
     'advice',
