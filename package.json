@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "tsc index.ts --module commonjs ",
     "pretest": "tsc test/*Test.ts --module commonjs",
-    "test": "mocha --reporter list"
+    "test": "mocha --reporter mochawesome --reporter-options reportDir=.,reportFilename=coverage.html"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@types/node": "^7.0.22",
     "assert": "^1.4.1",
-    "mocha": "^3.4.2"
+    "mocha": "^3.4.2",
+    "mochawesome": "^2.2.0"
   }
 }
