@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/unsaidxpl/typescript-inflect#readme",
   "dependencies": {
+    "chai": "^4.0.2",
     "typescript": "^2.3.3"
   },
   "devDependencies": {
