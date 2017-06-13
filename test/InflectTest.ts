@@ -4,7 +4,9 @@
 /// <reference path="../typings/index.d.ts" />
 /// <reference> node.d.ts
 import Inflect from '../index';
-import assert = require('assert');
+import chai = require('chai');
+
+const expect = chai.expect;
 
 describe('Inflect', () => {
   let subject = Inflect;
@@ -17,8 +19,10 @@ describe('Inflect', () => {
     ];
 
     tests.forEach((test) => {
+      const result = subject.demodulize.call(subject, test.arg);
       it(`demodulizes '${test.arg}'`, () => {
-        assert.equal(test.expected, subject.demodulize.call(subject, test.arg));
+        expect(result).to.be.a('string');
+        expect(result).to.equal(test.expected);
       });
     });
   });
@@ -31,15 +35,17 @@ describe('Inflect', () => {
     ];
 
     tests.forEach((test) => {
+      const result = subject.camelize.apply(subject, test.args);
       it(`camelizes '${test.args[0]}' with lowercase first letter = '${test.args[1]}'`, () => {
-        assert.equal(test.expected, subject.camelize.apply(subject, test.args));
+        expect(result).to.be.a('string');
+        expect(result).to.equal(test.expected);
       });
     });
   });
 
   describe('#dasherize', () => {
     it('dasherizes string', () => {
-      assert.equal('un-der-score', subject.dasherize('un_der_score'));
+      expect(subject.dasherize('un_der_score')).to.equal('un-der-score');
     });
   });
 
@@ -53,8 +59,10 @@ describe('Inflect', () => {
     ]
 
     tests.forEach((test) => {
+      const result = subject.ordinal.call(subject, test.arg)
       it(`returns ${test.arg} number suffix`, () => {
-        assert.equal(test.expected, subject.ordinal.call(subject, test.arg));
+        expect(result).to.be.a('string');
+        expect(result).to.equal(test.expected);
       });
     });
   });
@@ -68,8 +76,10 @@ describe('Inflect', () => {
     ]
 
     tests.forEach((test) => {
+      const result = subject.ordinalize.call(subject, test.arg);
       it(`return ${test.arg} number with '${test.expected}'' suffix`, () => {
-        assert.equal(test.expected, subject.ordinalize.call(subject, test.arg));
+        expect(result).to.be.a('string');
+        expect(result).to.equal(test.expected);
       });
     });
   });
@@ -82,8 +92,10 @@ describe('Inflect', () => {
     ]
 
     tests.forEach((test) => {
+      const result = subject.underscore.call(subject, test.arg);
       it(`return underscored '${test.arg}' string`, () => {
-        assert.equal(test.expected, subject.underscore.call(subject, test.arg));
+        expect(result).to.be.a('string');
+        expect(result).to.equal(test.expected);
       });
     });
   });
@@ -100,8 +112,10 @@ describe('Inflect', () => {
     ]
 
     tests.forEach((test) => {
+      const result = subject.pluralize.call(subject, test.arg);
       it(`pluralizes word '${test.arg}'`, () => {
-        assert.equal(test.expected, subject.pluralize.call(subject, test.arg));
+        expect(result).to.be.a('string');
+        expect(result).to.equal(test.expected);
       });
     });
   });
@@ -116,18 +130,20 @@ describe('Inflect', () => {
     ]
 
     tests.forEach((test) => {
+      const result = subject.singularize.call(subject, test.arg);
       it(`singularizes word '${test.arg}'`, () => {
-        assert.equal(test.expected, subject.singularize.call(subject, test.arg));
+        expect(result).to.be.a('string');
+        expect(result).to.equal(test.expected);
       });
     });
   });
 
   describe('#classify', () => {
     it('classifies string with dots', () => {
-      assert.equal('Property', subject.classify('product.properties'));
+      expect('Property', subject.classify('product.properties'));
     });
     it('classifies string with underscores', () => {
-      assert.equal('WordProblem', subject.classify('word_problems'));
+      expect(subject.classify('word_problems')).to.equal('WordProblem');
     });
   });
 });
